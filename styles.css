@@ -42,10 +42,11 @@ img{display:block;max-width:100%}
 .eyebrow.light{color:var(--rose)}
 
 /* ---------- top bar ---------- */
-.topbar{position:relative;background:var(--plum-900);color:#ecdbe4;font-size:.8rem;letter-spacing:.04em;text-align:center;padding:8px 40px}
+.topbar{position:relative;background:var(--plum-900);color:#ecdbe4;font-size:.8rem;letter-spacing:.04em;text-align:center;padding:9px 46px}
 .topbar b{color:var(--rose);font-weight:600}
-.topbar-close{position:absolute;top:50%;right:8px;transform:translateY(-50%);width:30px;height:30px;display:grid;place-items:center;background:none;border:none;border-radius:50%;color:#ecdbe4;font-size:1.25rem;line-height:1;cursor:pointer;opacity:.75;transition:opacity .2s,background .2s}
-.topbar-close:hover{opacity:1;background:rgba(255,255,255,.12)}
+/* dismiss button — prominent, easy-to-tap on phones/tablets; toned down on desktop below */
+.topbar-close{position:absolute;top:50%;right:8px;transform:translateY(-50%);width:34px;height:34px;display:grid;place-items:center;background:rgba(255,255,255,.16);border:none;border-radius:50%;color:#fff;font-size:1.4rem;line-height:1;cursor:pointer;opacity:1;transition:opacity .2s,background .2s;-webkit-tap-highlight-color:transparent}
+.topbar-close:hover{background:rgba(255,255,255,.28)}
 
 /* ---------- nav ---------- */
 header{position:sticky;top:0;z-index:50;background:rgba(250,245,233,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);transition:box-shadow .3s,background .3s}
@@ -327,6 +328,10 @@ footer{background:var(--plum-800);color:#b59fac;padding:16px 0 14px}
    ≥ 1024px — desktop (restores the full multi-column layout)
    ============================================================ */
 @media(min-width:1024px){
+  /* announcement bar — subtle dismiss button on desktop (hover to reveal) */
+  .topbar{padding:8px 40px}
+  .topbar-close{width:30px;height:30px;font-size:1.25rem;background:none;color:#ecdbe4;opacity:.75}
+  .topbar-close:hover{opacity:1;background:rgba(255,255,255,.12)}
   .nav{height:78px;gap:0}
   .brand{flex:0 0 auto;gap:13px}
   .brandmark{width:48px;height:48px}
