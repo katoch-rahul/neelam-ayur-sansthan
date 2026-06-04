@@ -25,23 +25,53 @@ document.addEventListener('DOMContentLoaded', function () {
   }, { threshold: .12 });
   document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
 
+  // pre-type an opening message on any direct WhatsApp link (data-wa attribute)
+  document.querySelectorAll('a[data-wa]').forEach(function (a) {
+    a.href = waUrl(a.getAttribute('data-wa'));
+  });
+
   // escape closes modal
   addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
 });
 
-// order modal
+// ---- WhatsApp helpers ----
+var BIZ_WHATSAPP = '918968661284'; // country code + number, no symbols
+var BIZ_EMAIL = 'neelamayursansthan@gmail.com';
+
+// Build a wa.me link with an optional pre-typed opening message.
+function waUrl(msg) {
+  return 'https://wa.me/' + BIZ_WHATSAPP + (msg ? '?text=' + encodeURIComponent(msg) : '');
+}
+
+// Price/size reference so order messages can name the exact product.
+var PRODUCT_INFO = {
+  'Amla Juice': '₹249 · 500 ml',
+  'Buransh Juice': '₹299 · 500 ml'
+};
+
+// order modal — tailors the title, text and the WhatsApp/email links to the product
 function openModal(product) {
   var modal = document.getElementById('modal');
   if (!modal) return;
   var t = document.getElementById('modal-title');
   var p = document.getElementById('modal-text');
+  var wa = document.getElementById('modal-wa');
+  var em = document.getElementById('modal-email');
+  var waMsg, subject;
   if (product) {
+    var price = PRODUCT_INFO[product];
     if (t) t.textContent = 'Order ' + product;
     if (p) p.textContent = 'To order ' + product + ', reach out directly — we’ll confirm freshness, quantity and delivery for you.';
+    waMsg = 'Hello Neelam Ayur Sansthan 🌿\nI’d like to order *' + product + '*' + (price ? ' (' + price + ')' : '') + '.\nCould you please share availability and delivery details?';
+    subject = 'Order enquiry — ' + product;
   } else {
     if (t) t.textContent = 'Order with us';
     if (p) p.textContent = 'To place your order, reach out directly — we’ll confirm freshness, quantity and delivery for you.';
+    waMsg = 'Hello Neelam Ayur Sansthan 🌿\nI’d like to place an order. Could you please tell me what’s available and how to order?';
+    subject = 'Order enquiry';
   }
+  if (wa) wa.href = waUrl(waMsg);
+  if (em) em.href = 'mailto:' + BIZ_EMAIL + '?subject=' + encodeURIComponent(subject);
   modal.classList.add('open');
 }
 function closeModal() {
@@ -50,8 +80,6 @@ function closeModal() {
 }
 
 // enquiry form — delivers the enquiry to WhatsApp with all fields pre-filled
-var BIZ_WHATSAPP = '918968661284'; // Neelam Ayur Sansthan — country code + number, no symbols
-
 function submitForm(e) {
   e.preventDefault();
   var form = e.target;
@@ -71,7 +99,7 @@ function submitForm(e) {
   });
 
   var message = 'Hello Neelam Ayur Sansthan 🌿\nI would like to get in touch.\n\n' + lines.join('\n');
-  var url = 'https://wa.me/' + BIZ_WHATSAPP + '?text=' + encodeURIComponent(message);
+  var url = waUrl(message);
 
   // Open WhatsApp (synchronously, inside the user gesture, so it isn't blocked)
   window.open(url, '_blank', 'noopener');
