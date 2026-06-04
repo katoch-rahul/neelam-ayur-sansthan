@@ -72,8 +72,10 @@ header.scrolled{box-shadow:0 8px 30px -20px rgba(37,17,30,.5);background:rgba(25
 .btn-ghost:hover{background:var(--plum-700);color:var(--sand-2)}
 .btn-ghost.light{border-color:var(--rose);color:var(--cream)}
 .btn-ghost.light:hover{background:var(--rose);color:var(--plum-900)}
-/* header CTA stays visible at every width — compact on phones, full size from 640px up */
-.nav .btn-primary{flex:none;white-space:nowrap;padding:.5rem .9rem;font-size:.82rem}
+/* header CTA stays visible at every width. On phones it sizes to min-content so
+   its two-word label wraps to two lines (one word each) — the narrowest the button
+   can be, leaving the brand name room to show in full. Full size from 640px up. */
+.nav .btn-primary{flex:none;white-space:normal;width:min-content;text-align:center;line-height:1.15;padding:.45rem .8rem;font-size:.82rem}
 /* hamburger — 44px tap target, nudged to align the icon with the gutter */
 .nav-toggle{display:grid;place-items:center;width:44px;height:44px;margin-right:-8px;background:none;border:none;cursor:pointer;color:var(--plum-800)}
 
@@ -284,8 +286,8 @@ footer{background:var(--plum-800);color:#b59fac;padding:16px 0 14px}
    ============================================================ */
 @media(min-width:640px){
   .wrap{padding:0 22px}
-  /* full-size header CTA once there's room beside the brand + hamburger */
-  .nav .btn-primary{padding:.72rem 1.4rem;font-size:.92rem;min-height:44px}
+  /* full-size single-line header CTA once there's room beside the brand + hamburger */
+  .nav .btn-primary{width:auto;white-space:nowrap;line-height:normal;padding:.72rem 1.4rem;font-size:.92rem;min-height:44px}
   .hero-stats{gap:34px}
   .hero-badge{padding:16px 20px}
   .media-frame,.band .media-frame{height:400px}
