@@ -49,11 +49,36 @@ function closeModal() {
   if (modal) modal.classList.remove('open');
 }
 
-// enquiry form
+// enquiry form — delivers the enquiry to WhatsApp with all fields pre-filled
+var BIZ_WHATSAPP = '918968661284'; // Neelam Ayur Sansthan — country code + number, no symbols
+
 function submitForm(e) {
   e.preventDefault();
-  var btn = e.target.querySelector('button[type=submit]');
-  btn.textContent = '✓ Enquiry Sent — We’ll be in touch!';
-  btn.style.background = 'var(--green-700)';
-  setTimeout(function () { e.target.reset(); btn.textContent = 'Send Enquiry'; btn.style.background = ''; }, 3200);
+  var form = e.target;
+  var btn = form.querySelector('button[type=submit]');
+  var original = btn ? btn.textContent : 'Send Enquiry';
+
+  // Gather each filled field as "Label: value"
+  var lines = [];
+  Array.prototype.forEach.call(form.elements, function (el) {
+    if (!el.name || el.type === 'submit' || el.type === 'button') return;
+    var val = (el.value || '').trim();
+    if (!val) return;
+    var field = el.closest ? el.closest('.field') : null;
+    var lab = field ? field.querySelector('label') : null;
+    var label = lab ? lab.textContent.replace(/\s*\(optional\)\s*/i, '').trim() : el.name;
+    lines.push(label + ': ' + val);
+  });
+
+  var message = 'Hello Neelam Ayur Sansthan 🌿\nI would like to get in touch.\n\n' + lines.join('\n');
+  var url = 'https://wa.me/' + BIZ_WHATSAPP + '?text=' + encodeURIComponent(message);
+
+  // Open WhatsApp (synchronously, inside the user gesture, so it isn't blocked)
+  window.open(url, '_blank', 'noopener');
+
+  if (btn) {
+    btn.textContent = '✓ Opening WhatsApp…';
+    btn.style.background = 'var(--green-700)';
+    setTimeout(function () { form.reset(); btn.textContent = original; btn.style.background = ''; }, 3200);
+  }
 }
