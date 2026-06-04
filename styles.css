@@ -48,12 +48,14 @@ img{display:block;max-width:100%}
 /* ---------- nav ---------- */
 header{position:sticky;top:0;z-index:50;background:rgba(250,245,233,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);transition:box-shadow .3s,background .3s}
 header.scrolled{box-shadow:0 8px 30px -20px rgba(37,17,30,.5);background:rgba(250,245,233,.95)}
-.nav{display:flex;align-items:center;justify-content:space-between;height:72px}
-.brand{display:flex;align-items:center;gap:13px;min-width:0}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:10px;height:72px}
+/* brand flexes to fill the row; its text ellipsizes before anything overflows */
+.brand{display:flex;align-items:center;gap:10px;min-width:0;flex:1 1 auto}
 .brandmark{width:44px;height:44px;border-radius:50%;flex:none;overflow:hidden;box-shadow:0 6px 16px -8px rgba(37,17,30,.55),0 0 0 1px rgba(207,157,111,.25)}
 .brandmark img{width:100%;height:100%;display:block}
-.brand-txt b{font-family:var(--serif);font-size:1.08rem;letter-spacing:.02em;display:block;color:var(--plum-800);line-height:1}
-.brand-txt span{font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--rose-deep);font-weight:600}
+.brand-txt{min-width:0;overflow:hidden}
+.brand-txt b{font-family:var(--serif);font-size:1rem;letter-spacing:.02em;display:block;color:var(--plum-800);line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand-txt span{display:block;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--rose-deep);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 /* mobile: nav links live in a dropdown panel toggled by the hamburger */
 .links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:var(--cream);padding:8px 18px 14px;gap:2px;border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
 .links.open{display:flex}
@@ -70,8 +72,8 @@ header.scrolled{box-shadow:0 8px 30px -20px rgba(37,17,30,.5);background:rgba(25
 .btn-ghost:hover{background:var(--plum-700);color:var(--sand-2)}
 .btn-ghost.light{border-color:var(--rose);color:var(--cream)}
 .btn-ghost.light:hover{background:var(--rose);color:var(--plum-900)}
-/* header CTA hidden on the smallest screens (would overflow the row); shown from 640px up */
-.nav .btn-primary{display:none}
+/* header CTA stays visible at every width — compact on phones, full size from 640px up */
+.nav .btn-primary{flex:none;white-space:nowrap;padding:.5rem .9rem;font-size:.82rem}
 /* hamburger — 44px tap target, nudged to align the icon with the gutter */
 .nav-toggle{display:grid;place-items:center;width:44px;height:44px;margin-right:-8px;background:none;border:none;cursor:pointer;color:var(--plum-800)}
 
@@ -282,8 +284,8 @@ footer{background:var(--plum-800);color:#b59fac;padding:16px 0 14px}
    ============================================================ */
 @media(min-width:640px){
   .wrap{padding:0 22px}
-  /* header CTA now fits alongside the brand + hamburger */
-  .nav .btn-primary{display:inline-flex;margin-left:auto;margin-right:14px}
+  /* full-size header CTA once there's room beside the brand + hamburger */
+  .nav .btn-primary{padding:.72rem 1.4rem;font-size:.92rem;min-height:44px}
   .hero-stats{gap:34px}
   .hero-badge{padding:16px 20px}
   .media-frame,.band .media-frame{height:400px}
@@ -321,7 +323,8 @@ footer{background:var(--plum-800);color:#b59fac;padding:16px 0 14px}
    ≥ 1024px — desktop (restores the full multi-column layout)
    ============================================================ */
 @media(min-width:1024px){
-  .nav{height:78px}
+  .nav{height:78px;gap:0}
+  .brand{flex:0 0 auto;gap:13px}
   .brandmark{width:48px;height:48px}
   .brand-txt b{font-size:1.18rem}
   .brand-txt span{font-size:.66rem;letter-spacing:.26em}
@@ -331,7 +334,6 @@ footer{background:var(--plum-800);color:#b59fac;padding:16px 0 14px}
   .links a::after{left:0;bottom:0}
   .links a:hover::after,.links a.active::after{width:100%}
   .nav-toggle{display:none}
-  .nav .btn-primary{margin-left:0;margin-right:0}
 
   .page-hero{padding:74px 0 80px}
   .page-hero p{font-size:1.08rem}
