@@ -1,4 +1,14 @@
 // Neelam Ayur Sansthan — shared interactions
+
+// Announcement bar — hide immediately if the visitor dismissed it earlier. Runs
+// synchronously; this script sits at the end of <body>, so #topbar already exists.
+try {
+  if (localStorage.getItem('nas-topbar') === 'closed') {
+    var dismissedBar = document.getElementById('topbar');
+    if (dismissedBar) dismissedBar.style.display = 'none';
+  }
+} catch (e) {}
+
 document.addEventListener('DOMContentLoaded', function () {
   // year
   var yr = document.getElementById('yr');
@@ -77,6 +87,13 @@ function openModal(product) {
 function closeModal() {
   var modal = document.getElementById('modal');
   if (modal) modal.classList.remove('open');
+}
+
+// Dismiss the announcement bar and remember it for this browser.
+function closeTopbar() {
+  var tb = document.getElementById('topbar');
+  if (tb) tb.style.display = 'none';
+  try { localStorage.setItem('nas-topbar', 'closed'); } catch (e) {}
 }
 
 // enquiry form — delivers the enquiry to WhatsApp with all fields pre-filled

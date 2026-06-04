@@ -42,8 +42,10 @@ img{display:block;max-width:100%}
 .eyebrow.light{color:var(--rose)}
 
 /* ---------- top bar ---------- */
-.topbar{background:var(--plum-900);color:#ecdbe4;font-size:.8rem;letter-spacing:.04em;text-align:center;padding:8px 16px}
+.topbar{position:relative;background:var(--plum-900);color:#ecdbe4;font-size:.8rem;letter-spacing:.04em;text-align:center;padding:8px 40px}
 .topbar b{color:var(--rose);font-weight:600}
+.topbar-close{position:absolute;top:50%;right:8px;transform:translateY(-50%);width:30px;height:30px;display:grid;place-items:center;background:none;border:none;border-radius:50%;color:#ecdbe4;font-size:1.25rem;line-height:1;cursor:pointer;opacity:.75;transition:opacity .2s,background .2s}
+.topbar-close:hover{opacity:1;background:rgba(255,255,255,.12)}
 
 /* ---------- nav ---------- */
 header{position:sticky;top:0;z-index:50;background:rgba(250,245,233,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);transition:box-shadow .3s,background .3s}
