@@ -178,8 +178,10 @@ section.block{padding:56px 0}
 .about{background:var(--plum-800);color:var(--sand);position:relative;overflow:hidden}
 .about .leaf-deco{color:var(--plum-700);opacity:.4}
 .about-grid{display:grid;grid-template-columns:1fr;gap:36px;align-items:center;position:relative;z-index:2}
-.about-photo{position:relative}
-.about-photo image-slot,.about-photo .media-frame{width:100%;height:340px;border:1px solid rgba(207,157,111,.3);box-shadow:var(--shadow)}
+.about-photo{position:relative;width:100%;max-width:340px;justify-self:center}
+/* doctor portrait — sized to the photo's aspect so it shows in full, never cropped */
+.about-photo image-slot{width:100%;height:auto;aspect-ratio:349/557;border:1px solid rgba(207,157,111,.3);box-shadow:var(--shadow);background:var(--plum-900);display:block}
+.about-photo .media-frame{width:100%;height:340px;border:1px solid rgba(207,157,111,.3);box-shadow:var(--shadow)}
 .about-photo .frame{position:absolute;inset:14px;border:1px solid rgba(207,157,111,.45);border-radius:18px;pointer-events:none}
 .about .eyebrow{color:var(--rose)}
 .about h2{font-size:clamp(1.9rem,5.2vw,2.9rem);color:var(--cream);margin:.8rem 0 .4rem}
@@ -295,7 +297,8 @@ footer{background:var(--plum-800);color:#b59fac;padding:16px 0 14px}
   .hero-badge{padding:16px 20px}
   .media-frame,.band .media-frame{height:400px}
   .pd-media{height:360px}
-  .about-photo image-slot,.about-photo .media-frame{height:420px}
+  .about-photo{max-width:360px}
+  .about-photo .media-frame{height:420px}
   .val-grid{grid-template-columns:1fr 1fr;gap:20px}
   .steps-grid{grid-template-columns:1fr 1fr}
   .ail-grid{grid-template-columns:1fr 1fr;gap:14px;margin-top:34px}
@@ -366,7 +369,8 @@ footer{background:var(--plum-800);color:#b59fac;padding:16px 0 14px}
   .pd-media{height:460px}
 
   .about-grid{grid-template-columns:.85fr 1.15fr;gap:60px}
-  .about-photo image-slot,.about-photo .media-frame{height:480px}
+  .about-photo{max-width:400px}
+  .about-photo .media-frame{height:480px}
   .about p{font-size:1.04rem}
 
   .consult-grid{grid-template-columns:1.1fr .9fr;gap:56px}
